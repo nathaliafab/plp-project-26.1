@@ -21,14 +21,14 @@ Tendo em vista que a [linguagem funcional 1](https://augustosampaio.github.io/PL
 
   Exemplo:
   ```java
-  let var? y = 1 in
+  let optional var y = 1 in
     let var x = y! + 2 in
       x
   // y pode ser null (nesse caso tem um valor)
   // x é o valor de y (aqui tomado como não-nulo) + 2
   // x vale 3
 
-  let var? y in
+  let optional var y = null in
     let var x = y! + 2 in
       x
   // y pode ser null (nesse caso não tem um valor)
@@ -39,7 +39,7 @@ Tendo em vista que a [linguagem funcional 1](https://augustosampaio.github.io/PL
 
   Exemplo:
   ```java
-  let optional var y in
+  let optional var y = null in
     let var y ??= 5 in
       let var y ??= 10 in
         y
