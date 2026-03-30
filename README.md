@@ -10,7 +10,8 @@ Tendo em vista que a [linguagem funcional 1](https://augustosampaio.github.io/PL
   Exemplo:
   ```java
   let optional var y = 2 in
-    let var x = y ?? 3
+    let var x = y ?? 3 in
+      x
   // y pode ser null (nesse caso tem um valor)
   // Caso y seja null, x recebe 3
   // Caso não, x recebe y, que é 2
@@ -21,36 +22,27 @@ Tendo em vista que a [linguagem funcional 1](https://augustosampaio.github.io/PL
   Exemplo:
   ```java
   let var? y = 1 in
-    let var x = y! + 2
+    let var x = y! + 2 in
+      x
   // y pode ser null (nesse caso tem um valor)
   // x é o valor de y (aqui tomado como não-nulo) + 2
   // x vale 3
 
   let var? y in
-    let var x = y! + 2
+    let var x = y! + 2 in
+      x
   // y pode ser null (nesse caso não tem um valor)
   // x é o valor de y (aqui tomado como não-nulo) + 2
-  // erro de compilação por tentar acessar um valor que é nulo
+  // erro de execução por tentar acessar um valor que é nulo
   ```
-- **Late keyword:** keyword usada para declarar variáveis nulas com a condição de que elas só serão usadas após declarar um valor a ela.
-
-  Exemplo:
-  ```java
-  let late var y in
-    let var y = 2 in
-      x = y
-  // declaramos y sem valor (mas com late, garantindo que vamos atribuir um valor antes de usá-lo)
-  // atribuimos um valor a y (2)
-  // só então usamos y, atribuindo seu valor a x
-  // x vale 2
-  ```
-- **Operador de atribuição Se Nulo (Null-Aware Assignment Operator):** operador binário ("??=") que atribui um valor ao lado esquerdo se, e somente se, esse valor for nulo.
+- **Operador de atribuição Se Nulo (Null-Aware Assignment Operator):** operador binário ("??=") que atribui um valor ao lado esquerdo se, e somente se, esse valor for nulo. Na prática, seria um *shadowing* condicional.
 
   Exemplo:
   ```java
   let optional var y in
     let var y ??= 5 in
-      let var y ??= 10
+      let var y ??= 10 in
+        y
   // Declaramos uma variável como possivelmente nula
   // Atribuímos 5 a ela, já que ela é nula
   // Como a variável agora tem um valor (5), ela não recebe 10
