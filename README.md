@@ -3,10 +3,40 @@ IN1007 Project
 
 # Escopo
 
-Tendo em vista que a [linguagem funcional 1](https://augustosampaio.github.io/PLP/linguagens/funcional1) não possui tratamento para valores null (o próprio valor não existe, nem, portanto, null safety e uso de operadores), pensamos em implementar os seguintes conceitos na linguagem:
-- **Nullable type:** declaração com keyword "optional" (ou "?").
-- **Null coalescing:** operador binário ("??") que retorna o lado direito da operação caso o operador seja null, ou o esquerdo caso não seja null. Valor "default".
-  - **Operador Ternário:** operador "? :" que atua como um if-then-else. 
+Esse projeto tem como objetivo adicionar à [Linguagem Funcional 1](https://augustosampaio.github.io/PLP/linguagens/funcional1) o operador Null, a capacidade de Null safety, e operadores presentes em linguagens modernas que estão relacionados ao conceito de Null ("??", "!", "??="), além do operador ternário.
+
+Abaixo temos o que será implementado pela linguagem em mais detalhes:
+
+- **Nullable type:** Variáveis podem ser reassinaladas para o valor Null, desde que elas tenham a declaração com keyword "optional".
+
+  Exemplo
+  ```java
+  let optional var y = 2, var y = null
+  ```
+
+- **Null safety:** Caso uma operação tenha risco de causar um erro de execução por conta do Null, ela causa um erro de compilação, ao invés de potencialemente causar um erro de execução.
+
+  Exemplo 1:
+  ```java
+  let optional var y = 2 in
+    let var x = y + 3 in
+      x
+  // y pode ser null, potencialemente causando erro de execução
+  // Logo, o ambiente de compilação vai perceber o problema e lançar um erro de compilação
+  ```
+
+  Exemplo 2:
+  ```java
+  let optional var y = 2 in
+    if y !== null then
+      let var x = y + 3 in
+        x
+  // Com o if, garantimos que y não pode ser null, excluindo a possibilidade de um erro de execução causado pelo null
+  // Logo, o ambiente de compilação não vai lançar um erro
+  ```
+
+
+- **Null coalescing:** Operador binário ("??") que retorna o lado direito da operação caso o operador seja null, ou o esquerdo caso não seja null. Valor "default".
 
   Exemplo:
   ```java
@@ -18,7 +48,16 @@ Tendo em vista que a [linguagem funcional 1](https://augustosampaio.github.io/PL
   // Caso não, x recebe y, que é 2
   // x vale 2
   ```
-- **Null assertion:** acesso com keyword "!" para forçar leitura de valor como não-nulo, independente da declaração dele.
+
+ - **Operador Ternário:** Operador "? :" que atua como um if-then-else.
+
+    Exemplo:
+    ```java
+    let var a = 1, var b = 2, var c = a == b ? 3: 4 
+    ```
+  
+  
+- **Null assertion:** Colocando a keyword "!" após acessar a variável, garatimos ao compilador que o valor dela não é nulo, essencialmente permitindo ignorar o Null safety.
 
   Exemplo:
   ```java
@@ -52,4 +91,57 @@ Tendo em vista que a [linguagem funcional 1](https://augustosampaio.github.io/PL
 
   # BNF
 
-  ...
+  **Programa** ::= **Expressao**
+
+  **Expressao** ::= **Valor**
+        | **ExpUnaria**
+        | **ExpBinaria**
+        | **ExpTernaria**
+        | **ExpDeclaracao**
+        | **Id**
+        | **Aplicacao**
+        | **IfThenElse**
+  
+  **Valor** ::= **ValorConcreto**
+  
+  **ValorConcreto** ::= **ValorInteiro**
+        | **ValorBooleano**
+        | **ValorString**
+        | **ValorNulo**
+  
+  **ExpUnaria** ::= “-“ **Expressao**
+        | “not” **Expressao**
+        | “length” **Expressao**
+        | **Expressao** “!”
+  
+  **ExpBinaria** ::= **Expressao** “+” **Expressao**
+        | **Expressao** “-“ **Expressao**
+        | **Expressao** “and” **Expressao**
+        | **Expressao** “or” **Expressao**
+        | **Expressao** “==” **Expressao**
+        | **Expressao** “++” **Expressao**
+        | **Expressao** “??” **Expressao**
+  
+  **ExpTernaria** ::= **Expressao** “?” **Expressao** “:” **Expressao**
+  
+  **ExpDeclaracao** ::= “let” **DeclaracaoFuncional** “in” **Expressao**
+  
+  **DeclaracaoFuncional** ::= **DecVariavel**
+         | **DecFuncao**
+         | **DecComposta**
+  
+  **DecVariavel** ::= “var” Id “=” **Expressao**
+         | “var” **Id** “??=” **Expressao**
+         | “optional” **DecVariavel**
+  
+  **DecFuncao** ::= “fun” **ListId** “=” **Expressao**
+  
+  **DecComposta** ::= **DeclaracaoFuncional** “,” **DeclaracaoFuncional**
+  
+  **ListId** ::= **Id** | **Id** **ListId**
+  
+  **Aplicacao** ::= **Id**”(“ **ListExp** “)”
+  
+  **ListExp** ::= **Expressao** | **Expressao**, **ListExp**
+  
+  **IfThenElse** ::= “if” **Expressao** “then” **Expressao** “else” **Expressao**
