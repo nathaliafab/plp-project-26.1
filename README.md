@@ -6,6 +6,7 @@ IN1007 Project
 Tendo em vista que a [linguagem funcional 1](https://augustosampaio.github.io/PLP/linguagens/funcional1) não possui tratamento para valores null (o próprio valor não existe, nem, portanto, null safety e uso de operadores), pensamos em implementar os seguintes conceitos na linguagem:
 - **Nullable type:** declaração com keyword "optional" (ou "?").
 - **Null coalescing:** operador binário ("??") que retorna o lado direito da operação caso o operador seja null, ou o esquerdo caso não seja null. Valor "default".
+  - **Operador Ternário:** operador "? :" que atua como um if-then-else. 
 
   Exemplo:
   ```java
