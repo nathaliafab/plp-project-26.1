@@ -1,6 +1,10 @@
 # plp-project-26.1
 IN1007 Project
 
+# Equipe
+- Nathalia Fernanda de Araújo Barbosa (nfab) 
+- Thales de Oliveira Bezerra (tob2)
+
 # Escopo
 
 Esse projeto tem como objetivo adicionar à [Linguagem Funcional 1](https://augustosampaio.github.io/PLP/linguagens/funcional1) o operador Null, a capacidade de Null safety, e operadores presentes em linguagens modernas que estão relacionados ao conceito de Null ("??", "!", "??="), além do operador ternário.
