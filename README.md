@@ -126,13 +126,13 @@ Abaixo temos o que será implementado pela linguagem em mais detalhes:
   
   ExpDeclaracao ::= “let” DeclaracaoFuncional “in” Expressao
   
-  DeclaracaoFuncional ::= DecVariavel
+  DeclaracaoFuncional ::= “optional” DecVariavel
+         | DecVariavel
          | DecFuncao
          | DecComposta
   
   DecVariavel ::= “var” Id “=” Expressao
          | “var” Id “??=” Expressao
-         | “optional” DecVariavel
   
   DecFuncao ::= “fun” ListId “=” Expressao
   
