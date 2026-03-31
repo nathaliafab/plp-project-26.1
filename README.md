@@ -7,14 +7,14 @@ Esse projeto tem como objetivo adicionar à [Linguagem Funcional 1](https://augu
 
 Abaixo temos o que será implementado pela linguagem em mais detalhes:
 
-- **Nullable type:** Variáveis podem ser reassinaladas para o valor Null, desde que elas tenham a declaração com keyword "optional".
+- **Nullable type:** Variáveis podem ser reassinaladas para o valor Null, desde que tenham a declaração com keyword "optional".
 
   Exemplo
   ```java
   let optional var y = 2, var y = null
   ```
 
-- **Null safety:** Caso uma operação tenha risco de causar um erro de execução por conta do Null, ela causa um erro de compilação, ao invés de potencialemente causar um erro de execução.
+- **Null safety:** Caso uma operação tenha risco de causar erro de execução por causa do Null, ela lança um erro de compilação em vez disso.
 
   Exemplo 1:
   ```java
@@ -53,7 +53,7 @@ Abaixo temos o que será implementado pela linguagem em mais detalhes:
 
     Exemplo:
     ```java
-    let var a = 1, var b = 2, var c = a == b ? 3: 4 
+    let var a = 1, var b = 2, var c = a == b ? 3 : 4 
     ```
   
   
@@ -89,59 +89,60 @@ Abaixo temos o que será implementado pela linguagem em mais detalhes:
   // y vale 5
   ```
 
-  # BNF
+# BNF
+```
+  Programa ::= Expressao
 
-  **Programa** ::= **Expressao**
-
-  **Expressao** ::= **Valor**
-        | **ExpUnaria**
-        | **ExpBinaria**
-        | **ExpTernaria**
-        | **ExpDeclaracao**
-        | **Id**
-        | **Aplicacao**
-        | **IfThenElse**
+  Expressao ::= Valor
+        | ExpUnaria
+        | ExpBinaria
+        | ExpTernaria
+        | ExpDeclaracao
+        | Id
+        | Aplicacao
+        | IfThenElse
   
-  **Valor** ::= **ValorConcreto**
+  Valor ::= ValorConcreto
   
-  **ValorConcreto** ::= **ValorInteiro**
-        | **ValorBooleano**
-        | **ValorString**
-        | **ValorNulo**
+  ValorConcreto ::= ValorInteiro
+        | ValorBooleano
+        | ValorString
+        | ValorNulo
   
-  **ExpUnaria** ::= “-“ **Expressao**
-        | “not” **Expressao**
-        | “length” **Expressao**
-        | **Expressao** “!”
+  ExpUnaria ::= “-“ Expressao
+        | “not” Expressao
+        | “length” Expressao
+        | Expressao “!”
   
-  **ExpBinaria** ::= **Expressao** “+” **Expressao**
-        | **Expressao** “-“ **Expressao**
-        | **Expressao** “and” **Expressao**
-        | **Expressao** “or” **Expressao**
-        | **Expressao** “==” **Expressao**
-        | **Expressao** “++” **Expressao**
-        | **Expressao** “??” **Expressao**
+  ExpBinaria ::= Expressao “+” Expressao
+        | Expressao “-“ Expressao
+        | Expressao “and” Expressao
+        | Expressao “or” Expressao
+        | Expressao “==” Expressao
+        | Expressao “++” Expressao
+        | Expressao “??” Expressao
   
-  **ExpTernaria** ::= **Expressao** “?” **Expressao** “:” **Expressao**
+  ExpTernaria ::= Expressao “?” Expressao “:” Expressao
   
-  **ExpDeclaracao** ::= “let” **DeclaracaoFuncional** “in” **Expressao**
+  ExpDeclaracao ::= “let” DeclaracaoFuncional “in” Expressao
   
-  **DeclaracaoFuncional** ::= **DecVariavel**
-         | **DecFuncao**
-         | **DecComposta**
+  DeclaracaoFuncional ::= DecVariavel
+         | DecFuncao
+         | DecComposta
   
-  **DecVariavel** ::= “var” Id “=” **Expressao**
-         | “var” **Id** “??=” **Expressao**
-         | “optional” **DecVariavel**
+  DecVariavel ::= “var” Id “=” Expressao
+         | “var” Id “??=” Expressao
+         | “optional” DecVariavel
   
-  **DecFuncao** ::= “fun” **ListId** “=” **Expressao**
+  DecFuncao ::= “fun” ListId “=” Expressao
   
-  **DecComposta** ::= **DeclaracaoFuncional** “,” **DeclaracaoFuncional**
+  DecComposta ::= DeclaracaoFuncional “,” DeclaracaoFuncional
   
-  **ListId** ::= **Id** | **Id** **ListId**
+  ListId ::= Id | Id ListId
   
-  **Aplicacao** ::= **Id**”(“ **ListExp** “)”
+  Aplicacao ::= Id”(“ ListExp “)”
   
-  **ListExp** ::= **Expressao** | **Expressao**, **ListExp**
+  ListExp ::= Expressao | Expressao, ListExp
   
-  **IfThenElse** ::= “if” **Expressao** “then” **Expressao** “else” **Expressao**
+  IfThenElse ::= “if” Expressao “then” Expressao “else” Expressao
+```
