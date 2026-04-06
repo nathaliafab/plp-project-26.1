@@ -5,6 +5,31 @@ IN1007 Project
 - Nathalia Fernanda de Araújo Barbosa (nfab) 
 - Thales de Oliveira Bezerra (tob2)
 
+# Como rodar o projeto
+
+1. **Clone o repositório** e acesse a pasta do projeto.
+2. **Construa a imagem Docker**:
+   ```bash
+   docker build -t javacc-jdk25 .
+   ```
+3. **Inicie o container** (isso abrirá um terminal interativo):
+   ```bash
+   docker run --rm -it -v "$PWD":/workspace javacc-jdk25
+   ```
+4. **Compile e execute um código fonte** (dentro do container):
+
+   Para rodar um arquivo específico (input) presente na pasta `Funcional1`:
+   ```bash
+   mvn clean generate-sources compile exec:java -Dexec.args="input"
+   ```
+
+### Executando os Testes
+
+Para rodar todos os testes automatizados da pasta `Testes` e visualizar os resultados, basta executar o seguinte script dentro do container:
+```bash
+./run_tests.sh
+```
+
 # Escopo
 
 Esse projeto tem como objetivo adicionar à [Linguagem Funcional 1](https://augustosampaio.github.io/PLP/linguagens/funcional1) o operador Null, a capacidade de Null safety, e operadores presentes em linguagens modernas que estão relacionados ao conceito de Null ("??", "!", "??="), além do operador ternário.
