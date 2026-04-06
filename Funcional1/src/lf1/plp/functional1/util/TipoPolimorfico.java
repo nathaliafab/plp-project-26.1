@@ -94,6 +94,10 @@ public class TipoPolimorfico implements Tipo {
 		return this.eIgual(TipoPrimitivo.STRING);
 	}
 
+	public boolean eNulo() {
+		return this.eIgual(TipoPrimitivo.NULO);
+	}
+
 	public boolean eIgual(Tipo tipo) {
 		boolean ret = false;
 
