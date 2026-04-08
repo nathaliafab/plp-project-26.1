@@ -166,6 +166,7 @@ TOKEN : /* TOKENS DE FUNCIONAL 1 */
 | < FALSE : "false" >
 | < LET : "let" >
 | < VAR : "var" >
+| < OPTIONAL : "optional" >
 | < IN : "in" >
 | < IF : "if" >
 | < THEN : "then" >
@@ -428,14 +429,15 @@ DeclaracaoFuncional PDeclVar() :
 {
   Id id;
   Expressao expressao;
+  boolean isOptional = false;
   DeclaracaoFuncional retorno;
 }
 {
   (
-    < VAR > id = PId() < ASSIGN > expressao = PExpressao()
+    < VAR > ( < OPTIONAL > { isOptional = true; } )? id = PId() < ASSIGN > expressao = PExpressao()
   )
   {
-    return new DecVariavel(id, expressao);
+    return new DecVariavel(id, expressao, isOptional);
   }
 }
 

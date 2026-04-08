@@ -9,7 +9,11 @@ public interface Ambiente<T> {
 
 	public void restaura();
 
+    public boolean isAlreadyOptional(Id idArg);
+
 	public void map(Id idArg, T tipoId) throws VariavelJaDeclaradaException;
+
+	public void map(Id idArg, T tipoId, boolean optional) throws VariavelJaDeclaradaException;
 
 	public T get(Id idArg) throws VariavelNaoDeclaradaException;
 
