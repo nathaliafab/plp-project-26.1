@@ -36,14 +36,14 @@ Esse projeto tem como objetivo adicionar à [Linguagem Funcional 1](https://augu
 
 Abaixo temos o que será implementado pela linguagem em mais detalhes:
 
-- **Nullable type:** Variáveis podem ser reassinaladas para o valor Null, desde que tenham a declaração com keyword "optional".
+- [x] **Nullable type:** Variáveis podem ser reassinaladas para o valor Null, desde que tenham a declaração com keyword "optional".
 
   Exemplo
   ```java
   let optional var y = 2, var y = null
   ```
 
-- **Null safety:** Caso uma operação tenha risco de causar erro de execução por causa do Null, ela lança um erro de compilação em vez disso.
+- [ ] **Null safety:** Caso uma operação tenha risco de causar erro de execução por causa do Null, ela lança um erro de compilação em vez disso.
 
   Exemplo 1:
   ```java
@@ -65,7 +65,7 @@ Abaixo temos o que será implementado pela linguagem em mais detalhes:
   ```
 
 
-- **Null coalescing:** Operador binário ("??") que retorna o lado direito da operação caso o operador seja null, ou o esquerdo caso não seja null. Valor "default".
+- [ ] **Null coalescing:** Operador binário ("??") que retorna o lado direito da operação caso o operador seja null, ou o esquerdo caso não seja null. Valor "default".
 
   Exemplo:
   ```java
@@ -78,7 +78,7 @@ Abaixo temos o que será implementado pela linguagem em mais detalhes:
   // x vale 2
   ```
 
- - **Operador Ternário:** Operador "? :" que atua como um if-then-else.
+- [ ] **Operador Ternário:** Operador "? :" que atua como um if-then-else.
 
     Exemplo:
     ```java
@@ -86,7 +86,7 @@ Abaixo temos o que será implementado pela linguagem em mais detalhes:
     ```
   
   
-- **Null assertion:** Colocando a keyword "!" após acessar a variável, garatimos ao compilador que o valor dela não é nulo, essencialmente permitindo ignorar o Null safety.
+- [ ] **Null assertion:** Colocando a keyword "!" após acessar a variável, garatimos ao compilador que o valor dela não é nulo, essencialmente permitindo ignorar o Null safety.
 
   Exemplo:
   ```java
@@ -104,7 +104,7 @@ Abaixo temos o que será implementado pela linguagem em mais detalhes:
   // x é o valor de y (aqui tomado como não-nulo) + 2
   // erro de execução por tentar acessar um valor que é nulo
   ```
-- **Operador de atribuição Se Nulo (Null-Aware Assignment Operator):** operador binário ("??=") que atribui um valor ao lado esquerdo se, e somente se, esse valor for nulo. Na prática, seria um *shadowing* condicional.
+- [ ] **Operador de atribuição Se Nulo (Null-Aware Assignment Operator):** operador binário ("??=") que atribui um valor ao lado esquerdo se, e somente se, esse valor for nulo. Na prática, seria um *shadowing* condicional.
 
   Exemplo:
   ```java
