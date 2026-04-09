@@ -40,14 +40,14 @@ Abaixo temos o que será implementado pela linguagem em mais detalhes:
 
   Exemplo
   ```java
-  let optional var y = 2, var y = null
+  let var optional y = 2, var y = null
   ```
 
 - [ ] **Null safety:** Caso uma operação tenha risco de causar erro de execução por causa do Null, ela lança um erro de compilação em vez disso.
 
   Exemplo 1:
   ```java
-  let optional var y = 2 in
+  let var optional y = 2 in
     let var x = y + 3 in
       x
   // y pode ser null, potencialemente causando erro de execução
@@ -56,7 +56,7 @@ Abaixo temos o que será implementado pela linguagem em mais detalhes:
 
   Exemplo 2:
   ```java
-  let optional var y = 2 in
+  let var optional y = 2 in
     if y !== null then
       let var x = y + 3 in
         x
@@ -69,7 +69,7 @@ Abaixo temos o que será implementado pela linguagem em mais detalhes:
 
   Exemplo:
   ```java
-  let optional var y = 2 in
+  let var optional y = 2 in
     let var x = y ?? 3 in
       x
   // y pode ser null (nesse caso tem um valor)
@@ -78,26 +78,28 @@ Abaixo temos o que será implementado pela linguagem em mais detalhes:
   // x vale 2
   ```
 
-- [ ] **Operador Ternário:** Operador "? :" que atua como um if-then-else.
+- [x] **Operador Ternário:** Operador "? :" que atua como um if-then-else.
 
     Exemplo:
     ```java
-    let var a = 1, var b = 2, var c = a == b ? 3 : 4 
+    let var a = 1, var b = 2 in
+      let var c = a == b ? 3 : 4 in
+        c
     ```
-  
-  
+
+
 - [ ] **Null assertion:** Colocando a keyword "!" após acessar a variável, garatimos ao compilador que o valor dela não é nulo, essencialmente permitindo ignorar o Null safety.
 
   Exemplo:
   ```java
-  let optional var y = 1 in
+  let var optional y = 1 in
     let var x = y! + 2 in
       x
   // y pode ser null (nesse caso tem um valor)
   // x é o valor de y (aqui tomado como não-nulo) + 2
   // x vale 3
 
-  let optional var y = null in
+  let var optional y = null in
     let var x = y! + 2 in
       x
   // y pode ser null (nesse caso não tem um valor)
@@ -108,7 +110,7 @@ Abaixo temos o que será implementado pela linguagem em mais detalhes:
 
   Exemplo:
   ```java
-  let optional var y = null in
+  let var optional y = null in
     let var y ??= 5 in
       let var y ??= 10 in
         y
