@@ -51,9 +51,9 @@ for TEST_FILE in "$TEST_DIR"/*; do
         echo -e "${RED}Status: [FALHOU]${NC}"
         echo -ne "${YELLOW}  Motivo: ${NC}"
         
-        ERR_MSG=$(grep -iE "exception" "$TMP_OUT" | \
-                  grep -vE "http://|Help [0-9]|For more information" | head -n 1 | \
-                  sed -E 's/.*Java class\. //; s/ -> \[Help 1\]//; s/\[ERROR\] //')
+        ERR_MSG=$(grep -iE "exception|erro de tipo|erro" "$TMP_OUT" | \
+                  grep -vE "http://|Help [0-9]|For more information|\[ERROR\]" | head -n 1 | \
+                  sed -E 's/.*Java class\. //; s/ -> \[Help 1\]//; s/\[ERROR\] //; s/Funcional 1 PLP Parser Version 0\.0\.1: //')
 
         if [ -z "$ERR_MSG" ]; then
             echo -e "Erro desconhecido (verifique o log manual)"
