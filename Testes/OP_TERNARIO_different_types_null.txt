@@ -1,0 +1,1 @@
+let var x = 4 == 3 ? null : 1 in x

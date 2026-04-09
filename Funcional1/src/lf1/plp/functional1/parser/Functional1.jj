@@ -14,6 +14,7 @@ import lf1.plp.functional1.declaration.DecFuncao;
 import lf1.plp.functional1.declaration.DecComposta;
 import lf1.plp.functional1.expression.ExpDeclaracao;
 import lf1.plp.functional1.expression.IfThenElse;
+import lf1.plp.expressions2.expression.ExpOpTernario;
 import lf1.plp.functional1.expression.Aplicacao;
 import java.util.*;
 import lf1.plp.expressions2.expression.ExpAnd;
@@ -637,10 +638,16 @@ Expressao PExpBinaria3() :
 
 Expressao PExpressao() :
 {
-  Expressao retorno;
+  Expressao retorno, expThen, expElse;
 }
 {
   retorno = PExpBinaria()
+  (
+    < HOOK > expThen = PExpressao() < COLON > expElse = PExpressao()
+    {
+      retorno = new ExpOpTernario(retorno, expThen, expElse);
+    }
+  )?
   {
     return retorno;
   }
