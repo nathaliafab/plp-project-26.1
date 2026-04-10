@@ -1,0 +1,2 @@
+let fun prod x y = x == 0 ? 0 : y + prod(x-1, y) in
+    prod(2,3)
