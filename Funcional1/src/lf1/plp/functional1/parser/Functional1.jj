@@ -576,7 +576,7 @@ Expressao PExpBinaria() :
 {
   (
     retorno = PExpBinaria2()
-    (
+    ( LOOKAHEAD(1)
       < EQ > param2 = PExpBinaria2()
       {
         retorno = new ExpEquals(retorno, param2);
@@ -595,8 +595,9 @@ Expressao PExpBinaria2() :
 {
   (
     retorno = PExpBinaria3()
-    (
-      < PLUS > param2 = PExpBinaria3()
+    ( LOOKAHEAD(2)
+        (
+        < PLUS > param2 = PExpBinaria3()
       {
         retorno = new ExpSoma(retorno, param2);
       }
@@ -612,7 +613,8 @@ Expressao PExpBinaria2() :
       {
         retorno = new ExpConcat(retorno, param2);
       }
-    )*
+    )
+      )*
   )
   {
     return retorno;
@@ -626,7 +628,7 @@ Expressao PExpBinaria3() :
 {
   (
     retorno = PExpUnaria()
-    (
+    ( LOOKAHEAD(1)
       < AND > param2 = PExpUnaria()
       {
         retorno = new ExpAnd(retorno, param2);
@@ -644,8 +646,8 @@ Expressao PExpCoalesce() :
 }
 {
   retorno = PExpBinaria()
-  (
-    < COALESCE > param2 = PExpCoalesce()
+  ( LOOKAHEAD(1)
+    < COALESCE > param2 = PExpBinaria()
     {
       retorno = new ExpNullCoalescing(retorno, param2);
     }
@@ -661,7 +663,7 @@ Expressao PExpressao() :
 }
 {
   retorno = PExpCoalesce()
-  (
+  ( LOOKAHEAD(1)
     < HOOK > expThen = PExpressao() < COLON > expElse = PExpressao()
     {
       retorno = new ExpOpTernario(retorno, expThen, expElse);
