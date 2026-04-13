@@ -8,6 +8,7 @@ options
 PARSER_BEGIN(Func1Parser)
 package lf1.plp.functional1.parser;
 import lf1.plp.functional1.*;
+import lf1.plp.functional1.declaration.DecVariavelNullAware;
 import lf1.plp.functional1.declaration.DecVariavel;
 import lf1.plp.functional1.declaration.DeclaracaoFuncional;
 import lf1.plp.functional1.declaration.DecFuncao;
@@ -231,6 +232,7 @@ TOKEN : /* SEPARATORS */
 TOKEN : /* OPERATORS */
 {
   < ASSIGN : "=" >
+| < NULL_ASSIGN : "??=" >
 | < GT : ">" >
 | < LT : "<" >
 | < BANG : "!" >
@@ -433,14 +435,24 @@ DeclaracaoFuncional PDeclVar() :
   Id id;
   Expressao expressao;
   boolean isOptional = false;
+  boolean isNullAware = false;
   DeclaracaoFuncional retorno;
 }
 {
   (
-    < VAR > ( < OPTIONAL > { isOptional = true; } )? id = PId() < ASSIGN > expressao = PExpressao()
+    < VAR > ( < OPTIONAL > { isOptional = true; } )? id = PId() 
+    (
+      < ASSIGN > 
+    | < NULL_ASSIGN > { isNullAware = true; }
+    ) 
+    expressao = PExpressao()
   )
   {
-    return new DecVariavel(id, expressao, isOptional);
+    if (isNullAware) {
+      return new DecVariavelNullAware(id, expressao, isOptional);
+    } else {
+      return new DecVariavel(id, expressao, isOptional);
+    }
   }
 }
 
