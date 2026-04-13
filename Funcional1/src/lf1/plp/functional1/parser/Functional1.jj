@@ -23,6 +23,7 @@ import lf1.plp.expressions2.expression.ExpEquals;
 import lf1.plp.expressions2.expression.ExpLength;
 import lf1.plp.expressions2.expression.ExpMenos;
 import lf1.plp.expressions2.expression.ExpNot;
+import lf1.plp.expressions2.expression.ExpNullCoalescing;
 import lf1.plp.expressions2.expression.ExpOr;
 import lf1.plp.expressions2.expression.ExpSoma;
 import lf1.plp.expressions2.expression.ExpSub;
@@ -235,6 +236,7 @@ TOKEN : /* OPERATORS */
 | < BANG : "!" >
 | < TILDE : "~" >
 | < HOOK : "?" >
+| < COALESCE : "??" >
 | < COLON : ":" >
 | < EQ : "==" >
 | < LE : "<=" >
@@ -636,12 +638,29 @@ Expressao PExpBinaria3() :
   }
 }
 
+Expressao PExpCoalesce() :
+{
+  Expressao retorno, param2;
+}
+{
+  retorno = PExpBinaria()
+  (
+    < COALESCE > param2 = PExpCoalesce()
+    {
+      retorno = new ExpNullCoalescing(retorno, param2);
+    }
+  )*
+  {
+    return retorno;
+  }
+}
+
 Expressao PExpressao() :
 {
   Expressao retorno, expThen, expElse;
 }
 {
-  retorno = PExpBinaria()
+  retorno = PExpCoalesce()
   (
     < HOOK > expThen = PExpressao() < COLON > expElse = PExpressao()
     {
