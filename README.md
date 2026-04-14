@@ -65,7 +65,7 @@ Abaixo temos o que será implementado pela linguagem em mais detalhes:
   ```
 
 
-- [ ] **Null coalescing:** Operador binário ("??") que retorna o lado direito da operação caso o operador seja null, ou o esquerdo caso não seja null. Valor "default".
+- [x] **Null coalescing:** Operador binário ("??") que retorna o lado direito da operação caso o operador seja null, ou o esquerdo caso não seja null. Valor "default".
 
   Exemplo:
   ```java
@@ -106,7 +106,7 @@ Abaixo temos o que será implementado pela linguagem em mais detalhes:
   // x é o valor de y (aqui tomado como não-nulo) + 2
   // erro de execução por tentar acessar um valor que é nulo
   ```
-- [ ] **Operador de atribuição Se Nulo (Null-Aware Assignment Operator):** operador binário ("??=") que atribui um valor ao lado esquerdo se, e somente se, esse valor for nulo. Na prática, seria um *shadowing* condicional.
+- [x] **Operador de atribuição Se Nulo (Null-Aware Assignment Operator):** operador binário ("??=") que atribui um valor ao lado esquerdo se, e somente se, esse valor for nulo. Na prática, seria um *shadowing* condicional.
 
   Exemplo:
   ```java
@@ -158,12 +158,15 @@ Abaixo temos o que será implementado pela linguagem em mais detalhes:
   ExpDeclaracao ::= “let” DeclaracaoFuncional “in” Expressao
   
   DeclaracaoFuncional ::= “optional” DecVariavel
+         | “optional” DecVariavelNullAware
          | DecVariavel
+         | DecVariavelNullAware
          | DecFuncao
          | DecComposta
   
   DecVariavel ::= “var” Id “=” Expressao
-         | “var” Id “??=” Expressao
+
+  DecVariavelNullAware ::= “var” Id “??=” Expressao
   
   DecFuncao ::= “fun” ListId “=” Expressao
   

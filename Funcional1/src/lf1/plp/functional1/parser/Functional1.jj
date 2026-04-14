@@ -8,6 +8,7 @@ options
 PARSER_BEGIN(Func1Parser)
 package lf1.plp.functional1.parser;
 import lf1.plp.functional1.*;
+import lf1.plp.functional1.declaration.DecVariavelNullAware;
 import lf1.plp.functional1.declaration.DecVariavel;
 import lf1.plp.functional1.declaration.DeclaracaoFuncional;
 import lf1.plp.functional1.declaration.DecFuncao;
@@ -23,6 +24,7 @@ import lf1.plp.expressions2.expression.ExpEquals;
 import lf1.plp.expressions2.expression.ExpLength;
 import lf1.plp.expressions2.expression.ExpMenos;
 import lf1.plp.expressions2.expression.ExpNot;
+import lf1.plp.expressions2.expression.ExpNullCoalescing;
 import lf1.plp.expressions2.expression.ExpOr;
 import lf1.plp.expressions2.expression.ExpSoma;
 import lf1.plp.expressions2.expression.ExpSub;
@@ -230,11 +232,13 @@ TOKEN : /* SEPARATORS */
 TOKEN : /* OPERATORS */
 {
   < ASSIGN : "=" >
+| < NULL_ASSIGN : "??=" >
 | < GT : ">" >
 | < LT : "<" >
 | < BANG : "!" >
 | < TILDE : "~" >
 | < HOOK : "?" >
+| < COALESCE : "??" >
 | < COLON : ":" >
 | < EQ : "==" >
 | < LE : "<=" >
@@ -431,14 +435,24 @@ DeclaracaoFuncional PDeclVar() :
   Id id;
   Expressao expressao;
   boolean isOptional = false;
+  boolean isNullAware = false;
   DeclaracaoFuncional retorno;
 }
 {
   (
-    < VAR > ( < OPTIONAL > { isOptional = true; } )? id = PId() < ASSIGN > expressao = PExpressao()
+    < VAR > ( < OPTIONAL > { isOptional = true; } )? id = PId() 
+    (
+      < ASSIGN > 
+    | < NULL_ASSIGN > { isNullAware = true; }
+    ) 
+    expressao = PExpressao()
   )
   {
-    return new DecVariavel(id, expressao, isOptional);
+    if (isNullAware) {
+      return new DecVariavelNullAware(id, expressao, isOptional);
+    } else {
+      return new DecVariavel(id, expressao, isOptional);
+    }
   }
 }
 
@@ -574,7 +588,7 @@ Expressao PExpBinaria() :
 {
   (
     retorno = PExpBinaria2()
-    (
+    ( LOOKAHEAD(1)
       < EQ > param2 = PExpBinaria2()
       {
         retorno = new ExpEquals(retorno, param2);
@@ -593,8 +607,9 @@ Expressao PExpBinaria2() :
 {
   (
     retorno = PExpBinaria3()
-    (
-      < PLUS > param2 = PExpBinaria3()
+    ( LOOKAHEAD(2)
+        (
+        < PLUS > param2 = PExpBinaria3()
       {
         retorno = new ExpSoma(retorno, param2);
       }
@@ -610,7 +625,8 @@ Expressao PExpBinaria2() :
       {
         retorno = new ExpConcat(retorno, param2);
       }
-    )*
+    )
+      )*
   )
   {
     return retorno;
@@ -624,7 +640,7 @@ Expressao PExpBinaria3() :
 {
   (
     retorno = PExpUnaria()
-    (
+    ( LOOKAHEAD(1)
       < AND > param2 = PExpUnaria()
       {
         retorno = new ExpAnd(retorno, param2);
@@ -636,13 +652,30 @@ Expressao PExpBinaria3() :
   }
 }
 
+Expressao PExpCoalesce() :
+{
+  Expressao retorno, param2;
+}
+{
+  retorno = PExpBinaria()
+  ( LOOKAHEAD(1)
+    < COALESCE > param2 = PExpBinaria()
+    {
+      retorno = new ExpNullCoalescing(retorno, param2);
+    }
+  )*
+  {
+    return retorno;
+  }
+}
+
 Expressao PExpressao() :
 {
   Expressao retorno, expThen, expElse;
 }
 {
-  retorno = PExpBinaria()
-  (
+  retorno = PExpCoalesce()
+  ( LOOKAHEAD(1)
     < HOOK > expThen = PExpressao() < COLON > expElse = PExpressao()
     {
       retorno = new ExpOpTernario(retorno, expThen, expElse);
