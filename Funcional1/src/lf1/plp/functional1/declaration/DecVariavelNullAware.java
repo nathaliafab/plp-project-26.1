@@ -34,7 +34,7 @@ public class DecVariavelNullAware implements DeclaracaoFuncional {
         }
 
 	/**
-	 * Retorna uma representacao String desta expressao. Util para depuracao.
+	 * Retorna uma representacao String desta expressao. Útil para depuracao.
 	 * 
 	 * @return uma representacao String desta expressao.
 	 */
@@ -52,17 +52,17 @@ public class DecVariavelNullAware implements DeclaracaoFuncional {
         }
 
 	/**
-	 * Retorna os tipos possiveis desta declara��o.
+	 * Retorna os tipos possiveis desta declaração.
 	 * 
 	 * @param amb
 	 *            o ambiente que contem o mapeamento entre identificadores e
 	 *            tipos.
-	 * @return os tipos possiveis desta declara��o.
+	 * @return os tipos possiveis desta declaração.
 	 * @exception VariavelNaoDeclaradaException
-	 *                se houver uma vari&aacute;vel n&atilde;o declarada no
+	 *                se houver uma variável não declarada no
 	 *                ambiente.
 	 * @exception VariavelJaDeclaradaException
-	 *                se houver uma mesma vari&aacute;vel declarada duas vezes
+	 *                se houver uma mesma variável declarada duas vezes
 	 *                no mesmo bloco do ambiente.
 	 * @precondition this.checaTipo(amb);
 	 */
@@ -71,7 +71,7 @@ public class DecVariavelNullAware implements DeclaracaoFuncional {
         }
 
 	/**
-	 * Realiza a verificacao de tipos desta declara��o.
+	 * Realiza a verificacao de tipos desta declaração.
 	 * 
 	 * @param amb
 	 *            o ambiente de compilação.
