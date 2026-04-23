@@ -11,3 +11,5 @@
 
 Gemfile.lock
 .bundle
+
+.tmp_test_output.code

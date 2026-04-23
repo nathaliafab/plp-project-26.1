@@ -1,3 +1,6 @@
+inputs: 1 true
+expect: 3 1 2 7 true "oi" 3
+
 {
   var a = 3,
   var c = 0;

@@ -1,0 +1,5 @@
+expect: Encountered errors during parse.
+
+aaaaaaaaaaa
+aaaaaaaaaaaa
+aa
