@@ -12,7 +12,7 @@ RUN apt-get update \
 COPY --chown=plpuser:plpuser . /workspace
 
 
-WORKDIR /workspace/Funcional1
+WORKDIR /workspace/Imperativa1
 
 # Troca para o usuário não-root
 USER plpuser

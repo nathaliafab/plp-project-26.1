@@ -1,3 +1,0 @@
-let var optional y = null in
-  let var x = y ?? 5 in
-    x
