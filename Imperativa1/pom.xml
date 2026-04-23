@@ -42,7 +42,7 @@
         <artifactId>exec-maven-plugin</artifactId>
         <configuration>
           <mainClass>li1.plp.imperative1.parser.Imp1Parser</mainClass>
-          <commandlineArgs>input</commandlineArgs>
+          <commandlineArgs>${exec.args}</commandlineArgs>
         </configuration>
       </plugin>
       <plugin>

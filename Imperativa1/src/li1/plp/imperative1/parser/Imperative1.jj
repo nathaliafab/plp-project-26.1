@@ -301,9 +301,9 @@ SequenciaComando PSequenciaComando() :
 	{return new SequenciaComando(c1, c2);}
 }
 
-IO PIO() :
+li1.plp.imperative1.command.IO PIO() :
 {
-	IO retorno;
+	li1.plp.imperative1.command.IO retorno;
 }
 {
 	(

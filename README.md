@@ -20,7 +20,7 @@ IN1007 Project
 
    Para rodar um arquivo específico (input) presente na pasta `Imperativa1`:
    ```bash
-   mvn clean generate-sources compile exec:java -Dexec.args="input"
+   mvn clean generate-sources compile exec:java -Dexec.args="input 1 true"
    ```
 
 ### Executando os Testes
