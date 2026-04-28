@@ -156,6 +156,7 @@ Atribuicao ::= Id “:=” Expressao
 Expressao ::= Valor
        | ExpUnaria
        | ExpBinaria
+       | ExpTernaria
        | Id
 
 Valor ::= ValorConcreto
@@ -163,10 +164,12 @@ Valor ::= ValorConcreto
 ValorConcreto ::= ValorInteiro
        | ValorBooleano
        | ValorString
+       | ValorNulo
 
 ExpUnaria ::= “-“ Expressao
        | “not” Expressao
        | “length” Expressao
+       | Expressao "!"
 
 ExpBinaria ::= Expressao “+” Expressao
        | Expressao “-“ Expressao
@@ -174,13 +177,17 @@ ExpBinaria ::= Expressao “+” Expressao
        | Expressao “or” Expressao
        | Expressao “==” Expressao
        | Expressao “++” Expressao
+       | Expressao "??" Expressao
 
 ComandoDeclaracao ::= “{“ Declaracao “;” Comando “}”
 
 Declaracao ::= DeclaracaoVariavel
        | DeclaracaoComposta
+       | DeclaracaoOptional
 
 DeclaracaoVariavel ::= “var” Id “=” Expressao
+
+DeclaracaoOptional ::= "var" "optional" Id "=" Expressao
 
 DeclaracaoComposta ::= Declaracao “,” Declaracao
 
