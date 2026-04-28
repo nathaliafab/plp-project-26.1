@@ -1,0 +1,11 @@
+inputs: 
+expect: 5 null
+
+{
+  var optional a = 5,
+  var optional b = null;
+  write(a);
+  a := null;
+  b := a;
+  write(b)
+}

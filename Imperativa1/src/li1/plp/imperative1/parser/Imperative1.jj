@@ -111,11 +111,13 @@ TOKEN : /* TOKENS DE EXPRESSOES 1 */
 | < LENGTH      : "length" > 
 | < TRUE        : "true" >
 | < FALSE       : "false" >
+| < NULL        : "null" >
 }
 
 TOKEN : /* TOKENS DE IMPERATIVA 1 */
 {
   < VAR: "var" >
+| < OPTIONAL: "optional" >
 | < COMAND_SKIP: "skip" >
 | < WHILE: "while" >
 | < DO: "do" >
@@ -414,7 +416,12 @@ Valor PValorBooleano() :
 	  <FALSE> { return new ValorBooleano(false); } 
 	| <TRUE>  { return new ValorBooleano(true); }
 }
-
+Valor PValorNulo() :
+{
+}
+{
+	<NULL> { return new ValorNulo(); }
+}
 Valor PValorString() :
 {
 	Token token;
@@ -437,11 +444,9 @@ Valor PValor() :
       	  retorno = PValorInteiro() 
 		| retorno = PValorBooleano()
 		| retorno = PValorString()
-    )
-	
-	{
-		return retorno;
-	}
+		| retorno = PValorNulo()
+	)
+	{return retorno;}
 }
 
 Expressao PExpMenos() :
@@ -686,15 +691,16 @@ DeclaracaoComposta PDeclaracaoComposta():
 	{return new DeclaracaoComposta(d1, d2);}
 }
 
-DeclaracaoVariavel PDeclaracaoVariavel() :
+Declaracao PDeclaracaoVariavel() :
 {
 	Id id;
 	Expressao exp;
-	DeclaracaoVariavel retorno;
+	Declaracao retorno;
+	boolean isOptional = false;
 }
 {
-	 <VAR> id = PId() <ASSIGN> exp = PExpressao() 
-	   	{retorno = new DeclaracaoVariavel(id, exp);}
+	 <VAR> ( <OPTIONAL> { isOptional = true; } )? id = PId() <ASSIGN> exp = PExpressao() 
+	   	{ if (isOptional) retorno = new DeclaracaoOptional(id, exp); else retorno = new DeclaracaoVariavel(id, exp); }
 	{
 		return retorno;
 	}

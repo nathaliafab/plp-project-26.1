@@ -142,6 +142,7 @@ Abaixo temos o que será implementado pela linguagem em mais detalhes:
 Programa ::= Comando
 
 Comando ::= Atribuicao
+       | AtribuicaoSeNulo
        | ComandoDeclaracao
        | While
        | IfThenElse
@@ -152,6 +153,8 @@ Comando ::= Atribuicao
 Skip ::=
 
 Atribuicao ::= Id “:=” Expressao
+
+AtribuicaoSeNulo := Id "??=" Expressao
 
 Expressao ::= Valor
        | ExpUnaria
@@ -178,6 +181,8 @@ ExpBinaria ::= Expressao “+” Expressao
        | Expressao “==” Expressao
        | Expressao “++” Expressao
        | Expressao "??" Expressao
+
+ExpTernaria ::= Expressao "?" Expressao ":" Expressao
 
 ComandoDeclaracao ::= “{“ Declaracao “;” Comando “}”
 

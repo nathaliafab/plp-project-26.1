@@ -1,0 +1,9 @@
+inputs: 
+expect: "hello"
+
+{
+   var optional x = null;
+   x := 1;
+   x := "hello";
+   write(x)
+}
