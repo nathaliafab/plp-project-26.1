@@ -50,8 +50,20 @@ public class Atribuicao implements Comando {
 	 */
 	public boolean checaTipo(AmbienteCompilacaoImperativa ambiente)
 			throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException {
-		return expressao.checaTipo(ambiente)
+		boolean isExpNull = expressao.getTipo(ambiente).eIgual(li1.plp.expressions1.util.TipoPrimitivo.NULO);
+		boolean isIdOptional = id.getTipo(ambiente) instanceof li1.plp.expressions1.util.TipoOptional;
+		if (isExpNull && !isIdOptional) {
+			return false;
+		}
+		if (isExpNull && isIdOptional) {
+			return expressao.checaTipo(ambiente);
+		}
+		boolean ok = expressao.checaTipo(ambiente)
 				&& id.getTipo(ambiente).eIgual(expressao.getTipo(ambiente));
+		if (!ok) {
+			System.out.println("Atribuicao falhou o checaTipo! id type: " + id.getTipo(ambiente).getNome() + ", exp type: " + expressao.getTipo(ambiente).getNome());
+		}
+		return ok;
 	}
 
 }

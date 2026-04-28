@@ -64,6 +64,9 @@ public class DeclaracaoVariavel extends Declaracao {
 			IdentificadorNaoDeclaradoException {
 		boolean result = getExpressao().checaTipo(ambiente);
 		if (result) {
+			if (!this.getClass().equals(DeclaracaoOptional.class) && getExpressao().getTipo(ambiente).eIgual(li1.plp.expressions1.util.TipoPrimitivo.NULO)) {
+				return false;
+			}
 			ambiente.map(getId(), getExpressao().getTipo(ambiente));
 		}
 		return result;

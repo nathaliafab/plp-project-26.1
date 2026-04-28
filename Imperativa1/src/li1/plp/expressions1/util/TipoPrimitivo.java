@@ -11,7 +11,8 @@ public enum TipoPrimitivo implements Tipo {
 
 	INTEIRO("INTEIRO"),
 	BOOLEANO("BOOLEANO"),
-	STRING("STRING");
+	STRING("STRING"),
+	NULO("NULO");
 
 	protected String nome;
 

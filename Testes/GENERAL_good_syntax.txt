@@ -1,5 +1,5 @@
 inputs: 1 true
-expect: 3 1 2 7 true "oi" 3
+expect: 3 1 2 7 true "tchau" 3
 
 {
   var a = 3,
@@ -11,6 +11,7 @@ expect: 3 1 2 7 true "oi" 3
     var b = 5,
     var c = false,
     var d = "oi";
+    d := "tchau";
     read(c);
     write(a);
     write(b+a);
