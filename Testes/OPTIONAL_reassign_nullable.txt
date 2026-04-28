@@ -3,7 +3,7 @@ expect: 5 null
 
 {
   var optional a = 5,
-  var optional b = null;
+  var optional b = 10;
   write(a);
   a := null;
   b := a;

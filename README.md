@@ -36,13 +36,19 @@ Esse projeto tem como objetivo adicionar à [Linguagem Imperativa 1](https://aug
 
 Abaixo temos o que será implementado pela linguagem em mais detalhes:
 
-- [ ] **Nullable type:** Variáveis podem ser reassinaladas para o valor Null, desde que tenham a declaração com keyword "optional".
+- [x] **Nullable type:** Variáveis podem ser reassinaladas para o valor Null, desde que tenham a declaração com keyword "optional".
 
   Exemplo:
   ```java
-  { var optional y = null, var optional z = 2 ; 
-    Skip 
+  {
+    var optional a = 5,
+    var optional b = 10;
+    write(a);
+    a := null;
+    b := a;
+    write(b)
   }
+  //Saída: 5 e null
   ```
 
 - [ ] **Null safety:** Caso uma operação tenha risco de causar erro de execução por causa do Null, ela lança um erro de compilação em vez disso.
