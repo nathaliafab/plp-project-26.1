@@ -188,9 +188,9 @@ ComandoDeclaracao ::= “{“ Declaracao “;” Comando “}”
 
 Declaracao ::= DeclaracaoVariavel
        | DeclaracaoComposta
-       | DeclaracaoOptional
 
 DeclaracaoVariavel ::= “var” Id “=” Expressao
+       | DeclaracaoOptional
 
 DeclaracaoOptional ::= "var" "optional" Id "=" Expressao
 
