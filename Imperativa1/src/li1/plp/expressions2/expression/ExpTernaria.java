@@ -32,7 +32,7 @@ public abstract class ExpTernaria implements Expressao {
 	private String operador1;
 
 	/**
-	 * Operador 1 desta expressao ternaria
+	 * Operador 2 desta expressao ternaria
 	 */
 	private String operador2;
 
