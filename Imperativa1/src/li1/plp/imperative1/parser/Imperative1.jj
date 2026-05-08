@@ -253,6 +253,11 @@ TOKEN : /* OPERATORS */
 | < REM: "%" >
 }
 
+TOKEN : /* NOVO: NULL-AWARE OPERATORS */
+{
+  < NULL_COALESCING: "??" >
+| < NULL_AWARE_ASSIGN: "?:=" >
+}
 
 Programa Input() :
 { 
@@ -652,12 +657,26 @@ Expressao PExpressao() :
 	(
 	    LOOKAHEAD (PExpBase() <HOOK>) 
 			retorno = PExpTernaria()
+	  | LOOKAHEAD (PExpBase() <NULL_COALESCING>)
+	        retorno = PExpNullCoalescing()
 	  |
 	    retorno = PExpBase()
 	)
 	{
 		return retorno;
 	}
+}
+
+ExpNullCoalescing PExpNullCoalescing() :
+{
+	Expressao esq;
+	Expressao dir;
+}
+{
+	esq = PExpBase()
+	<NULL_COALESCING>
+	dir = PExpressao()
+	{return new ExpNullCoalescing(esq, dir);}
 }
 
 /*  ADICIONADO OU MODIFICADO DA Imperativa1 PARA A Imperativa2  */
@@ -669,6 +688,7 @@ Comando PComandoSimples() :
 {
     (
     	retorno = PSkip()
+      | LOOKAHEAD(PId() <NULL_AWARE_ASSIGN>) retorno = PAtribuicaoSeNulo()
       | retorno = PAtribuicao()
       | retorno = PComandoDeclaracao()
       | retorno = PWhile()
@@ -679,6 +699,16 @@ Comando PComandoSimples() :
     {
         return retorno;
     }
+}
+
+AtribuicaoSeNulo PAtribuicaoSeNulo() :
+{
+	Id id;
+	Expressao exp;
+}
+{
+	id = PId() <NULL_AWARE_ASSIGN> exp = PExpressao()
+	{ return new AtribuicaoSeNulo(id, exp); }
 }
 
 ComandoDeclaracao PComandoDeclaracao() :

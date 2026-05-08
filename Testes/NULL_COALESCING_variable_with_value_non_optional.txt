@@ -1,0 +1,7 @@
+expect: 2
+
+{
+   var y = 2,
+   var x = y ?? 5;
+   write(x)
+}
