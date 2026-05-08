@@ -69,8 +69,8 @@ for TEST_FILE in "$TEST_DIR"/*; do
 
     # Verificação de Sucesso ou Falha Esperada
     # Remove as linhas indesejadas e também remove a string do Parser do começo para extrair só a mensagem útil ou os outputs.
-    ACTUAL_OUT=$(grep -vE "\[INFO\]|\[WARNING\]|WARNING:|sun.misc.Unsafe|Reading from file|parsed successfully" "$TMP_OUT" | sed -E 's/Imperativa 1 PLP Parser Version [0-9\.]+:[ \t]*//g' | tr '\n' ' ' | xargs)
-    EXPECTED_OUT=$(echo "$EXPECTED_OUT" | xargs)
+    ACTUAL_OUT=$(grep -vE "\[INFO\]|\[WARNING\]|WARNING:|sun.misc.Unsafe|Reading from file|parsed successfully" "$TMP_OUT" | sed -E 's/Imperativa 1 PLP Parser Version [0-9\.]+:[ \t]*//g' | tr '\n' ' ' | tr -d '\r' | xargs)
+    EXPECTED_OUT=$(echo "$EXPECTED_OUT" | tr -d '\r' | xargs)
 
     if [ -n "$EXPECTED_OUT" ]; then
         # Removemos logs desnecessarios e checamos se a saida contem ou eh igual ao esperado

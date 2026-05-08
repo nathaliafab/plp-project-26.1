@@ -539,6 +539,36 @@ Expressao PExpBinaria() :
 	}
 }
 
+Expressao PExpBase() :
+{
+    Expressao retorno;
+}
+{
+    (
+        LOOKAHEAD (2) 
+            retorno = PExpUnaria()
+      | LOOKAHEAD (PExpPrimaria() (<OR> | <AND> | <MINUS> | <PLUS> | <EQ>| <CONCAT>)) 
+            retorno = PExpBinaria()
+      | retorno = PExpPrimaria()
+    )
+    { return retorno; }
+}
+
+Expressao PExpTernaria() :
+{
+	Expressao esq;
+	Expressao mei;
+	Expressao dir;
+}
+{
+	esq = PExpBase()
+	<HOOK>
+	mei = PExpressao()
+	<COLON>
+	dir = PExpressao()
+	{return new ExpOpTernario(esq, mei, dir);}
+}
+
 ExpSoma PExpSoma() :
 {
 	Expressao esq;
@@ -547,7 +577,7 @@ ExpSoma PExpSoma() :
 {
 	esq = PExpPrimaria()
 	<PLUS>
-	dir = PExpressao()
+	dir = PExpBase()
 	{return new ExpSoma(esq, dir);}
 }
 
@@ -559,7 +589,7 @@ ExpSub PExpSub() :
 {
 	esq = PExpPrimaria()
 	<MINUS>
-	dir = PExpressao()
+	dir = PExpBase()
 	{return new ExpSub(esq, dir);}
 }
 
@@ -572,7 +602,7 @@ ExpAnd PExpAnd() :
 {
 	esq = PExpPrimaria()
 	<AND>
-	dir = PExpressao()
+	dir = PExpBase()
 	{return new ExpAnd(esq, dir);}
 }
 
@@ -585,7 +615,7 @@ ExpOr PExpOr() :
 {
 	esq = PExpPrimaria()
 	<OR>
-	dir = PExpressao()
+	dir = PExpBase()
 	{return new ExpOr(esq, dir);}
 }
 
@@ -597,7 +627,7 @@ ExpEquals PExpEquals() :
 {
 	esq = PExpPrimaria()
 	<EQ>
-	dir = PExpressao()
+	dir = PExpBase()
 	{return new ExpEquals(esq, dir);}
 }
 
@@ -610,7 +640,7 @@ ExpConcat PExpConcat() :
 {
 	esq = PExpPrimaria()
 	<CONCAT>
-	dir = PExpressao()
+	dir = PExpBase()
 	{return new ExpConcat(esq, dir);}
 }
 
@@ -620,12 +650,10 @@ Expressao PExpressao() :
 }
 {
 	(
-	    LOOKAHEAD (2) 
-	  		retorno = PExpUnaria()
-	  | LOOKAHEAD (PExpPrimaria() (<OR> | <AND> | <MINUS> | <PLUS> | <EQ>| <CONCAT>)) 
-	  		retorno = PExpBinaria()
+	    LOOKAHEAD (PExpBase() <HOOK>) 
+			retorno = PExpTernaria()
 	  |
-	    retorno = PExpPrimaria()
+	    retorno = PExpBase()
 	)
 	{
 		return retorno;

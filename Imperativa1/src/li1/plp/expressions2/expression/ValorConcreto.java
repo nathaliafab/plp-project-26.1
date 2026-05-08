@@ -38,8 +38,10 @@ public abstract class ValorConcreto<T> implements Valor {
 	 * Determina igualdade entre objetos desta classe
 	 */
 	public boolean isEquals(ValorConcreto<T> obj) {
+		if (valor() == null) {
+			return obj.valor() == null;
+		}
 		return valor().equals(obj.valor());
-
 	}
 
 	/**

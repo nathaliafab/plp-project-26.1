@@ -1,0 +1,10 @@
+expect: 1 10 null
+
+{
+   var optional x = (4 == 3) ? null : 1,
+   var optional y = (x == null) ? null : 10,
+   var optional z = (4 == 4) ? null : 1;
+   write(x);
+   write(y);
+   write(z)
+}
