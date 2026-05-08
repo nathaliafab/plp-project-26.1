@@ -59,6 +59,9 @@ public class TipoOptional implements Tipo {
     }
 
     public Tipo intersecao(Tipo outroTipo) {
+        if (this.eIgual(outroTipo)) {
+            return this;
+        }
         return null;
     }
 
