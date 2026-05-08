@@ -21,8 +21,14 @@ public class DeclaracaoOptional extends DeclaracaoVariavel {
             IdentificadorNaoDeclaradoException {
         boolean result = getExpressao().checaTipo(ambiente);
         if (result) {
-            TipoOptional tipoOpt = new TipoOptional(getExpressao().getTipo(ambiente));
-            ambiente.map(getId(), tipoOpt);
+            li1.plp.expressions1.util.Tipo t = getExpressao().getTipo(ambiente);
+            
+            // Se a expressão já é do tipo opcional (ex: vindo do ternário), usamos ela diretamente.
+            // Caso contrário, envolvemos o tipo em um novo TipoOptional.
+            li1.plp.expressions1.util.Tipo tipoFinal = 
+                (t instanceof li1.plp.expressions1.util.TipoOptional) ? t : new li1.plp.expressions1.util.TipoOptional(t);
+                
+            ambiente.map(getId(), tipoFinal);
         }
         return result;
     }

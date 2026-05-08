@@ -539,6 +539,21 @@ Expressao PExpBinaria() :
 	}
 }
 
+Expressao PExpTernaria() :
+{
+	Expressao esq;
+	Expressao mei;
+	Expressao dir;
+}
+{
+	esq = PExpPrimaria()
+	<HOOK>
+	mei = PExpressao()
+	<COLON>
+	dir = PExpressao()
+	{return new ExpOpTernario(esq, mei, dir);}
+}
+
 ExpSoma PExpSoma() :
 {
 	Expressao esq;
@@ -620,6 +635,9 @@ Expressao PExpressao() :
 }
 {
 	(
+	    LOOKAHEAD (PExpPrimaria() <HOOK>) 
+			retorno = PExpTernaria()
+	  |
 	    LOOKAHEAD (2) 
 	  		retorno = PExpUnaria()
 	  | LOOKAHEAD (PExpPrimaria() (<OR> | <AND> | <MINUS> | <PLUS> | <EQ>| <CONCAT>)) 

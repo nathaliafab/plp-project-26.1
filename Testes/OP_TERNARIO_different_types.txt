@@ -1,0 +1,6 @@
+expect: Erro de tipo
+
+{
+   var x = 4 == 3 ? true : 1;
+   write(x)
+}

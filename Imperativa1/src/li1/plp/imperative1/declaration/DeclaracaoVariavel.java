@@ -6,6 +6,8 @@ import li1.plp.expressions2.memory.IdentificadorJaDeclaradoException;
 import li1.plp.expressions2.memory.IdentificadorNaoDeclaradoException;
 import li1.plp.imperative1.memory.AmbienteCompilacaoImperativa;
 import li1.plp.imperative1.memory.AmbienteExecucaoImperativa;
+import li1.plp.expressions1.util.Tipo;
+import li1.plp.expressions1.util.TipoPrimitivo;
 
 public class DeclaracaoVariavel extends Declaracao {
 
@@ -64,10 +66,15 @@ public class DeclaracaoVariavel extends Declaracao {
 			IdentificadorNaoDeclaradoException {
 		boolean result = getExpressao().checaTipo(ambiente);
 		if (result) {
-			if (!this.getClass().equals(DeclaracaoOptional.class) && getExpressao().getTipo(ambiente).eIgual(li1.plp.expressions1.util.TipoPrimitivo.NULO)) {
-				return false;
+			Tipo t = getExpressao().getTipo(ambiente);
+			
+			// 1. Se é um TipoOptional (ex: vindo de um ternário com null)
+			// 2. Se é o TipoPrimitivo.NULO (ex: var x = null)
+			if (t instanceof li1.plp.expressions1.util.TipoOptional || 
+				t.eIgual(TipoPrimitivo.NULO)) {
+				return false; // Retorna erro de tipo para variáveis comuns
 			}
-			ambiente.map(getId(), getExpressao().getTipo(ambiente));
+			ambiente.map(getId(), t);
 		}
 		return result;
 	}
