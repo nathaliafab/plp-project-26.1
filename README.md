@@ -32,7 +32,7 @@ Para rodar todos os testes automatizados da pasta `Testes` e visualizar os resul
 
 # Escopo
 
-Esse projeto tem como objetivo adicionar à [Linguagem Imperativa 1](https://augustosampaio.github.io/PLP/linguagens/imperativa1) o operador Null, a capacidade de Null safety, e operadores presentes em linguagens modernas que estão relacionados ao conceito de Null ("??", "!", "??="), além do operador ternário.
+Esse projeto tem como objetivo adicionar à [Linguagem Imperativa 1](https://augustosampaio.github.io/PLP/linguagens/imperativa1) o operador Null, a capacidade de Null safety, e operadores presentes em linguagens modernas que estão relacionados ao conceito de Null ("??", "!", "?:="), além do operador ternário.
 
 Abaixo temos o que será implementado pela linguagem em mais detalhes:
 
@@ -79,19 +79,18 @@ Abaixo temos o que será implementado pela linguagem em mais detalhes:
   ```
 
 
-- [ ] **Null coalescing:** Operador binário ("??") que retorna o lado direito da operação caso o operador seja null, ou o esquerdo caso não seja null. Valor "default".
+- [x] **Null coalescing:** Operador binário ("??") que retorna o lado direito da operação caso o operador seja null, ou o esquerdo caso não seja null. Valor "default".
 
   Exemplo:
   ```java
-  { var optional y = 2 ;
-    { var x = y ?? 3 ;
-      write(x)
-    }
+  {
+   var optional y = null,
+   var x = y ?? 5;
+   write(x)
   }
-  // y pode ser null (nesse caso tem um valor)
-  // Caso y seja null, x recebe 3
-  // Caso não, x recebe y, que é 2
-  // x vale 2
+  // y pode ser null (nesse caso é null)
+  // x é o valor de y caso y não seja null, ou 5 caso y seja null
+  // x vale 5
   ```
 
 - [x] **Operador Ternário:** Operador "? :" que atua como um if-then-else.
@@ -132,17 +131,18 @@ Abaixo temos o que será implementado pela linguagem em mais detalhes:
   // x é o valor de y (aqui tomado como não-nulo) + 2
   // erro de execução por tentar acessar um valor que é nulo
   ```
-- [ ] **Operador de atribuição Se Nulo (Null-Aware Assignment Operator):** operador binário ("??=") que atribui um valor ao lado esquerdo se, e somente se, esse valor for nulo. Na prática, seria um *shadowing* condicional.
+- [x] **Operador de atribuição Se Nulo (Null-Aware Assignment Operator):** operador binário ("?:=") que atribui um valor ao lado esquerdo se, e somente se, esse valor for nulo. Na prática, seria um *shadowing* condicional.
 
   Exemplo:
   ```java
-  { var optional y = null ;
-    y ??= 5 ;
-    y ??= 10 ;
-    write(y)
+  {
+   var optional y = null;
+   y ?:= 5;
+   y ?:= 10;
+   write(y)
   }
   // Declaramos uma variável como possivelmente nula
-  // Atribuímos 5 a ela, já que ela é nula
+  // Atribuímos a ela o valor 5, já que ela é nula
   // Como a variável agora tem um valor (5), ela não recebe 10
   // y vale 5
   ```
@@ -164,7 +164,7 @@ Skip ::=
 
 Atribuicao ::= Id “:=” Expressao
 
-AtribuicaoSeNulo := Id "??=" Expressao
+AtribuicaoSeNulo := Id "?:=" Expressao
 
 Expressao ::= Valor
        | ExpUnaria

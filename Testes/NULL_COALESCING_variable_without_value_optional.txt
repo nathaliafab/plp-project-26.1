@@ -1,0 +1,7 @@
+expect: null
+
+{
+   var optional y = null,
+   var optional x = y ?? null;
+   write(x)
+}
