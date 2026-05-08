@@ -94,15 +94,19 @@ Abaixo temos o que será implementado pela linguagem em mais detalhes:
   // x vale 2
   ```
 
-- [ ] **Operador Ternário:** Operador "? :" que atua como um if-then-else.
+- [x] **Operador Ternário:** Operador "? :" que atua como um if-then-else.
 
     Exemplo:
     ```java
-    { var a = 1, var b = 2 ;
-      { var c = a == b ? 3 : 4 ;
-        write(c)
-      }
-    }
+    {
+      var optional x = (4 == 3) ? null : 1,
+      var optional y = (x == null) ? null : 10,
+      var optional z = (4 == 4) ? null : 1;
+      write(x);
+      write(y);
+      write(z)
+   }
+   // Vai escrever: 1 10 null
     ```
 
 
