@@ -1,0 +1,10 @@
+inputs: 
+expect: Erro de execucao: valor nulo encontrado na assercao (!).
+
+{
+   var optional y = null ;
+   {
+      var x = y! + 2 ;
+      write(x)
+   }
+}

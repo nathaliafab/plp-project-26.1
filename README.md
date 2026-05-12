@@ -109,7 +109,7 @@ Abaixo temos o que será implementado pela linguagem em mais detalhes:
     ```
 
 
-- [ ] **Null assertion:** Colocando a keyword "!" após acessar a variável, garatimos ao compilador que o valor dela não é nulo, essencialmente permitindo ignorar o Null safety.
+- [x] **Null assertion:** Colocando a keyword "!" após acessar a variável, garatimos ao compilador que o valor dela não é nulo, essencialmente permitindo ignorar o Null safety.
 
   Exemplo:
   ```java
