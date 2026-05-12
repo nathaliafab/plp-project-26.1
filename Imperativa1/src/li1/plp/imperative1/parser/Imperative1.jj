@@ -497,15 +497,17 @@ Expressao PExpPrimaria() :
 	  | retorno = PValor() 
 	  | <LPAREN> retorno = PExpressao() <RPAREN>
 	)
-	{
-		return retorno; 
-	}
+        (
+            <BANG> { retorno = new ExpNullAssertion(retorno); }
+        )*
+        {
+                return retorno; 
+        }
 }
-
 
 Expressao PExpUnaria() :
 {
-	Expressao retorno;
+        Expressao retorno;
 }
 {
 	(

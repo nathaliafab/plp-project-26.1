@@ -1,0 +1,10 @@
+inputs: 
+expect: 3
+
+{
+   var optional y = 1 ;
+   {
+      var x = y! + 2 ;
+      write(x)
+   }
+}
