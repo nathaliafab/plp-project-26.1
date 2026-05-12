@@ -27,7 +27,7 @@ public class ExpNullAssertion extends ExpUnaria {
 
     @Override
     protected boolean checaTipoElementoTerminal(AmbienteCompilacao amb) throws VariavelJaDeclaradaException, VariavelNaoDeclaradaException {
-        return getExp().checaTipo(amb);
+        return true;
     }
     
     @Override
