@@ -51,7 +51,7 @@ Abaixo temos o que será implementado pela linguagem em mais detalhes:
   //Saída: 5 e null
   ```
 
-- [ ] **Null safety:** Caso uma operação tenha risco de causar erro de execução por causa do Null, ela lança um erro de compilação em vez disso.
+- [x] **Null safety:** Caso uma operação tenha risco de causar erro de execução por causa do Null, ela lança um erro de compilação em vez disso.
 
   Exemplo 1:
   ```java

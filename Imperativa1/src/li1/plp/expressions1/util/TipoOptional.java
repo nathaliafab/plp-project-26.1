@@ -28,15 +28,15 @@ public class TipoOptional implements Tipo {
     }
 
     public boolean eInteiro() {
-        return baseType != null && baseType.eInteiro();
+        return false;
     }
 
     public boolean eBooleano() {
-        return baseType != null && baseType.eBooleano();
+        return false;
     }
 
     public boolean eString() {
-        return baseType != null && baseType.eString();
+        return false;
     }
 
     public boolean eIgual(Tipo tipo) {

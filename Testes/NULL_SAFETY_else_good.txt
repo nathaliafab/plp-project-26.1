@@ -1,0 +1,11 @@
+inputs: 
+expect: 5
+
+{ var optional y = 2 ;
+  if (y == null) then
+    Skip
+  else
+    { var x = y + 3 ;
+      write(x)
+    }
+}

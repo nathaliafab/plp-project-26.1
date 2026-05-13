@@ -57,10 +57,69 @@ public class IfThenElse implements Comando {
 	public boolean checaTipo(AmbienteCompilacaoImperativa ambiente)
 			throws IdentificadorJaDeclaradoException,
 			IdentificadorNaoDeclaradoException, EntradaVaziaException {
-		return expressao.checaTipo(ambiente)
-				&& expressao.getTipo(ambiente).eBooleano()
-				&& comandoThen.checaTipo(ambiente)
-				&& comandoElse.checaTipo(ambiente);
+		
+		boolean isWellTyped = expressao.checaTipo(ambiente) && expressao.getTipo(ambiente).eBooleano();
+		if (!isWellTyped) return false;
+
+		li1.plp.expressions2.expression.Id idToCast = null;
+		boolean isNotEquals = false;
+
+		if (expressao instanceof li1.plp.expressions2.expression.ExpNot) {
+			li1.plp.expressions2.expression.Expressao inner = ((li1.plp.expressions2.expression.ExpNot) expressao).getExp();
+			if (inner instanceof li1.plp.expressions2.expression.ExpEquals) {
+				li1.plp.expressions2.expression.ExpEquals eq = (li1.plp.expressions2.expression.ExpEquals) inner;
+				if (eq.getEsq() instanceof li1.plp.expressions2.expression.Id && eq.getDir() instanceof li1.plp.expressions2.expression.ValorNulo) {
+					idToCast = (li1.plp.expressions2.expression.Id) eq.getEsq();
+					isNotEquals = true;
+				} else if (eq.getDir() instanceof li1.plp.expressions2.expression.Id && eq.getEsq() instanceof li1.plp.expressions2.expression.ValorNulo) {
+					idToCast = (li1.plp.expressions2.expression.Id) eq.getDir();
+					isNotEquals = true;
+				}
+			}
+		} else if (expressao instanceof li1.plp.expressions2.expression.ExpEquals) {
+			li1.plp.expressions2.expression.ExpEquals eq = (li1.plp.expressions2.expression.ExpEquals) expressao;
+			if (eq.getEsq() instanceof li1.plp.expressions2.expression.Id && eq.getDir() instanceof li1.plp.expressions2.expression.ValorNulo) {
+				idToCast = (li1.plp.expressions2.expression.Id) eq.getEsq();
+				isNotEquals = false;
+			} else if (eq.getDir() instanceof li1.plp.expressions2.expression.Id && eq.getEsq() instanceof li1.plp.expressions2.expression.ValorNulo) {
+				idToCast = (li1.plp.expressions2.expression.Id) eq.getDir();
+				isNotEquals = false;
+			}
+		}
+
+		// Checa bloco Then
+		ambiente.incrementa();
+		if (idToCast != null && isNotEquals) {
+			li1.plp.expressions1.util.Tipo tipo = ambiente.get(idToCast);
+			if (tipo instanceof li1.plp.expressions1.util.TipoOptional) {
+				li1.plp.expressions1.util.Tipo base = ((li1.plp.expressions1.util.TipoOptional) tipo).getBaseType();
+				if (base == null || base.getNome().equals("NULO")) {
+					ambiente.map(idToCast, new li1.plp.expressions1.util.TipoCuringa());
+				} else {
+					ambiente.map(idToCast, base);
+				}
+			}
+		}
+		boolean thenResult = comandoThen.checaTipo(ambiente);
+		ambiente.restaura();
+
+		// Checa bloco Else
+		ambiente.incrementa();
+		if (idToCast != null && !isNotEquals) {
+			li1.plp.expressions1.util.Tipo tipo = ambiente.get(idToCast);
+			if (tipo instanceof li1.plp.expressions1.util.TipoOptional) {
+				li1.plp.expressions1.util.Tipo base = ((li1.plp.expressions1.util.TipoOptional) tipo).getBaseType();
+				if (base == null || base.getNome().equals("NULO")) {
+					ambiente.map(idToCast, new li1.plp.expressions1.util.TipoCuringa());
+				} else {
+					ambiente.map(idToCast, base);
+				}
+			}
+		}
+		boolean elseResult = comandoElse.checaTipo(ambiente);
+		ambiente.restaura();
+
+		return thenResult && elseResult;
 	}
 
 }
