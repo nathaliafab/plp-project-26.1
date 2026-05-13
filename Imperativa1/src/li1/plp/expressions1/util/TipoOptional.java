@@ -2,17 +2,37 @@ package li1.plp.expressions1.util;
 
 public class TipoOptional implements Tipo {
     private Tipo baseType;
+    // Quando isRefinado é false, o operações em cima dele lançam erro de tipo
+    // Quando isRefinado é true, o tipo é considerado refinado e as operações são permitidas caso válidas
+    // isRefinado é true quando o null foi checado por um condicional
+    private boolean isRefinado;
 
     public TipoOptional() {
         this.baseType = null;
+        this.isRefinado = false;
     }
 
     public TipoOptional(Tipo baseType) {
         if (baseType instanceof TipoOptional) {
             this.baseType = ((TipoOptional) baseType).getBaseType();
+            this.isRefinado = ((TipoOptional) baseType).isRefinado();
+        } else {
+            this.baseType = baseType;
+            this.isRefinado = false;
+        }
+    }
+
+    public TipoOptional(Tipo baseType, boolean isRefinado) {
+        if (baseType instanceof TipoOptional) {
+            this.baseType = ((TipoOptional) baseType).getBaseType();
         } else {
             this.baseType = baseType;
         }
+        this.isRefinado = isRefinado;
+    }
+
+    public boolean isRefinado() {
+        return this.isRefinado;
     }
 
     public Tipo getBaseType() {
@@ -28,15 +48,15 @@ public class TipoOptional implements Tipo {
     }
 
     public boolean eInteiro() {
-        return false;
+        return isRefinado && baseType != null && !baseType.getNome().equals("NULO") && baseType.eInteiro();
     }
 
     public boolean eBooleano() {
-        return false;
+        return isRefinado && baseType != null && !baseType.getNome().equals("NULO") && baseType.eBooleano();
     }
 
     public boolean eString() {
-        return false;
+        return isRefinado && baseType != null && !baseType.getNome().equals("NULO") && baseType.eString();
     }
 
     public boolean eIgual(Tipo tipo) {

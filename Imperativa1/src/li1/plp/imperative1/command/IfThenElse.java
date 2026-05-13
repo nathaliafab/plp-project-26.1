@@ -96,7 +96,7 @@ public class IfThenElse implements Comando {
 				if (tipo instanceof li1.plp.expressions1.util.TipoOptional) {
 					li1.plp.expressions1.util.Tipo base = ((li1.plp.expressions1.util.TipoOptional) tipo).getBaseType();
 					if (base != null && !base.getNome().equals("NULO")) {
-						ambiente.map(idToCast, new li1.plp.expressions1.util.TipoOptionalRefinado(base));
+						ambiente.map(idToCast, new li1.plp.expressions1.util.TipoOptional(base, true));
 					}
 				}
 			}
@@ -114,7 +114,7 @@ public class IfThenElse implements Comando {
 				if (tipo instanceof li1.plp.expressions1.util.TipoOptional) {
 					li1.plp.expressions1.util.Tipo base = ((li1.plp.expressions1.util.TipoOptional) tipo).getBaseType();
 					if (base != null && !base.getNome().equals("NULO")) {
-						ambiente.map(idToCast, new li1.plp.expressions1.util.TipoOptionalRefinado(base));
+						ambiente.map(idToCast, new li1.plp.expressions1.util.TipoOptional(base, true));
 					}
 				}
 			}
