@@ -89,35 +89,39 @@ public class IfThenElse implements Comando {
 
 		// Checa bloco Then
 		ambiente.incrementa();
-		if (idToCast != null && isNotEquals) {
-			li1.plp.expressions1.util.Tipo tipo = ambiente.get(idToCast);
-			if (tipo instanceof li1.plp.expressions1.util.TipoOptional) {
-				li1.plp.expressions1.util.Tipo base = ((li1.plp.expressions1.util.TipoOptional) tipo).getBaseType();
-				if (base == null || base.getNome().equals("NULO")) {
-					ambiente.map(idToCast, new li1.plp.expressions1.util.TipoCuringa());
-				} else {
-					ambiente.map(idToCast, base);
+		boolean thenResult = false;
+		try {
+			if (idToCast != null && isNotEquals) {
+				li1.plp.expressions1.util.Tipo tipo = ambiente.get(idToCast);
+				if (tipo instanceof li1.plp.expressions1.util.TipoOptional) {
+					li1.plp.expressions1.util.Tipo base = ((li1.plp.expressions1.util.TipoOptional) tipo).getBaseType();
+					if (base != null && !base.getNome().equals("NULO")) {
+						ambiente.map(idToCast, new li1.plp.expressions1.util.TipoOptionalRefinado(base));
+					}
 				}
 			}
+			thenResult = comandoThen.checaTipo(ambiente);
+		} finally {
+			ambiente.restaura();
 		}
-		boolean thenResult = comandoThen.checaTipo(ambiente);
-		ambiente.restaura();
 
 		// Checa bloco Else
 		ambiente.incrementa();
-		if (idToCast != null && !isNotEquals) {
-			li1.plp.expressions1.util.Tipo tipo = ambiente.get(idToCast);
-			if (tipo instanceof li1.plp.expressions1.util.TipoOptional) {
-				li1.plp.expressions1.util.Tipo base = ((li1.plp.expressions1.util.TipoOptional) tipo).getBaseType();
-				if (base == null || base.getNome().equals("NULO")) {
-					ambiente.map(idToCast, new li1.plp.expressions1.util.TipoCuringa());
-				} else {
-					ambiente.map(idToCast, base);
+		boolean elseResult = false;
+		try {
+			if (idToCast != null && !isNotEquals) {
+				li1.plp.expressions1.util.Tipo tipo = ambiente.get(idToCast);
+				if (tipo instanceof li1.plp.expressions1.util.TipoOptional) {
+					li1.plp.expressions1.util.Tipo base = ((li1.plp.expressions1.util.TipoOptional) tipo).getBaseType();
+					if (base != null && !base.getNome().equals("NULO")) {
+						ambiente.map(idToCast, new li1.plp.expressions1.util.TipoOptionalRefinado(base));
+					}
 				}
 			}
+			elseResult = comandoElse.checaTipo(ambiente);
+		} finally {
+			ambiente.restaura();
 		}
-		boolean elseResult = comandoElse.checaTipo(ambiente);
-		ambiente.restaura();
 
 		return thenResult && elseResult;
 	}

@@ -1,0 +1,14 @@
+inputs: 
+expect: null
+
+{ var optional y = 2 ;
+  if not (y == null) then
+    { var optional tmp = y;
+      y := null;
+      write(y)
+    }
+  else
+    { var optional tmp = y;
+      write(tmp)
+    }
+}
