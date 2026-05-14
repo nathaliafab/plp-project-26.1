@@ -1,0 +1,7 @@
+expect: Erro de tipo
+
+{ var optional y = 2;
+  { var x = (y == null) ? y + 3 : 0;
+    write(x)
+  }
+}
