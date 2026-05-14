@@ -1,0 +1,8 @@
+inputs: 
+expect: 5
+
+{ var optional y = 2;
+  { var x = (y == null) ? 0 : y + 3;
+    write(x)
+  }
+}
