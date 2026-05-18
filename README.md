@@ -1,5 +1,6 @@
-# plp-project-26.1
-IN1007 Project
+# NullOperatorsLI1
+
+Esse projeto para a disciplina Paradigmas de Linguagens de Programação (IN1007) tem como objetivo adicionar à [Linguagem Imperativa 1](https://augustosampaio.github.io/PLP/linguagens/imperativa1) o operador Null, a capacidade de Null safety, e operadores presentes em linguagens modernas que estão relacionados ao conceito de Null ("??", "!", "?:="), além do operador ternário.
 
 # Equipe
 - Nathalia Fernanda de Araújo Barbosa (nfab) 
@@ -31,8 +32,6 @@ Para rodar todos os testes automatizados da pasta `Testes` e visualizar os resul
 ```
 
 # Escopo
-
-Esse projeto tem como objetivo adicionar à [Linguagem Imperativa 1](https://augustosampaio.github.io/PLP/linguagens/imperativa1) o operador Null, a capacidade de Null safety, e operadores presentes em linguagens modernas que estão relacionados ao conceito de Null ("??", "!", "?:="), além do operador ternário.
 
 Abaixo temos o que será implementado pela linguagem em mais detalhes:
 
