@@ -1,0 +1,10 @@
+inputs: 
+expect: Erro de tipo
+
+{
+   var optional y = true ;
+   {
+      var x = y! + 2 ;
+      write(x)
+   }
+}
